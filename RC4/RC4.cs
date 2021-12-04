@@ -11,13 +11,20 @@ namespace RC4
         {
             byte[] byteKey = Encoding.ASCII.GetBytes(key);
             byte[] bytePlainText = Encoding.ASCII.GetBytes(plainText);
-            return (Encrypt(byteKey, bytePlainText));
+            byte[] encrypted = Encrypt(byteKey, bytePlainText);
+            return encrypted;
         }
 
-        public static byte[] Decrypt(string key, byte[] plainText)
+        public static string Decrypt(string key, byte[] plainText)
         {
             byte[] byteKey = Encoding.ASCII.GetBytes(key);
-            return Encrypt(byteKey, plainText);
+            var decrypted = Encrypt(byteKey, plainText);
+            char[] cipherText = new char[decrypted.Length];
+            for (int i = 0; i < decrypted.Length; i++)
+            {
+                cipherText[i] = Convert.ToChar(decrypted[i]);
+            }         
+            return new string(cipherText);
         }
 
         public static byte[] Encrypt(byte[] key, byte[] data)
