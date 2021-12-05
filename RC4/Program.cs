@@ -26,23 +26,43 @@ namespace RC4
             string key;
             byte[] encrypted;
             string decrypted;
+            int hataSayisi;
             if (secim == "1")
             {
+                hataSayisi = 0;
             plaintextStart:
                 Console.WriteLine("Lutfen plaintext dosyasının, dosya konumunu giriniz");
                 string plainTextFolder = Console.ReadLine();
                 if (!File.Exists($@"{plainTextFolder}"))
                 {
                     Console.WriteLine("Girilen dosya gecersiz.");
-                    goto plaintextStart;
+                    if (hataSayisi++ == 2)
+                    {
+                        Console.WriteLine("3 kez yanlıs giris yaptınız, menuye geri donuyorsunuz.\n");
+                        return;
+                    }
+                    else
+                    {
+                        goto plaintextStart;
+                    }
                 }
+                hataSayisi = 0;
             keyStart:
                 Console.WriteLine("Lutfen key dosyasının, dosya konumunu giriniz");
                 string keyFolder = Console.ReadLine();
+
                 if (!File.Exists($@"{keyFolder}"))
                 {
                     Console.WriteLine("Girilen dosya gecersiz.");
-                    goto keyStart;
+                    if(hataSayisi++ == 2)
+                    {
+                        Console.WriteLine("3 kez yanlıs giris yaptınız, menuye geri donuyorsunuz.\n");
+                        return;
+                    }
+                    else
+                    {
+                        goto keyStart;
+                    }                   
                 }
                 plainText = File.ReadAllText($@"{plainTextFolder}");
                 key = File.ReadAllText($@"{keyFolder}");
