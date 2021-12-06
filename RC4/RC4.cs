@@ -7,18 +7,17 @@ namespace RC4
 {
     public static class RC4
     {
-        public static byte[] Encrypt(string key, string plainText)
+        public static byte[] Encrypt(string key, string veri)
         {
             byte[] byteKey = Encoding.ASCII.GetBytes(key);
-            byte[] bytePlainText = Encoding.ASCII.GetBytes(plainText);
-            byte[] encrypted = Encrypt(byteKey, bytePlainText);
-            return encrypted;
+            byte[] bytePlainText = Encoding.ASCII.GetBytes(veri);            
+            return Encrypt(byteKey, bytePlainText);
         }
 
-        public static string Decrypt(string key, byte[] plainText)
+        public static string Decrypt(string key, byte[] veri)
         {
             byte[] byteKey = Encoding.ASCII.GetBytes(key);
-            var decrypted = Encrypt(byteKey, plainText);
+            var decrypted = Encrypt(byteKey, veri);
             char[] cipherText = new char[decrypted.Length];
             for (int i = 0; i < decrypted.Length; i++)
             {
@@ -27,14 +26,14 @@ namespace RC4
             return new string(cipherText);
         }
 
-        public static byte[] Encrypt(byte[] key, byte[] data)
+        public static byte[] Encrypt(byte[] key, byte[] veri)
         {
-            return EncryptOutput(key, data).ToArray();
+            return EncryptOutput(key, veri).ToArray();
         }
 
-        public static byte[] Decrypt(byte[] key, byte[] data)
+        public static byte[] Decrypt(byte[] key, byte[] veri)
         {
-            return EncryptOutput(key, data).ToArray();
+            return EncryptOutput(key, veri).ToArray();
         }
 
         private static byte[] EncryptInitalize(byte[] key)
@@ -47,34 +46,33 @@ namespace RC4
             {
                 j = (j + key[i % key.Length] + s[i]) & 255;
 
-                Swap(s, i, j);
+                YerDegistir(s, i, j);
             }
 
             return s;
         }
 
-        private static IEnumerable<byte> EncryptOutput(byte[] key, IEnumerable<byte> data)
+        private static IEnumerable<byte> EncryptOutput(byte[] key, IEnumerable<byte> veri)
         {
             byte[] s = EncryptInitalize(key);
 
             int i = 0;
             int j = 0;
 
-            return data.Select((b) =>
+            return veri.Select((b) =>
             {
                 i = (i + 1) & 255;
                 j = (j + s[i]) & 255;
 
-                Swap(s, i, j);
+                YerDegistir(s, i, j);
 
                 return (byte)(b ^ s[(s[i] + s[j]) & 255]);
             });
         }
 
-        private static void Swap(byte[] s, int i, int j)
+        private static void YerDegistir(byte[] s, int i, int j)
         {
             byte c = s[i];
-
             s[i] = s[j];
             s[j] = c;
         }

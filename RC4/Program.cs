@@ -43,6 +43,7 @@ namespace RC4
                     }
                     else
                     {
+                        Console.WriteLine($"{hataSayisi} kez hatalı dosya girdiniz, 3 üst üste hata yaparsanız menüye geri döneceksiniz.");
                         goto plaintextStart;
                     }
                 }
@@ -61,6 +62,7 @@ namespace RC4
                     }
                     else
                     {
+                        Console.WriteLine($"{hataSayisi} kez hatalı dosya girdiniz, 3 üst üste hata yaparsanız menüye geri döneceksiniz.");
                         goto keyStart;
                     }                   
                 }
