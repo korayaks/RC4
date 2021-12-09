@@ -31,7 +31,7 @@ namespace RC4
             {
                 hataSayisi = 0;
             plaintextStart:
-                Console.WriteLine("Lutfen plaintext dosyasının, dosya konumunu giriniz");
+                Console.WriteLine("Lutfen düzyazı dosyasının, dosya konumunu giriniz");
                 string plainTextFolder = Console.ReadLine();
                 if (!File.Exists($@"{plainTextFolder}"))
                 {
@@ -49,7 +49,7 @@ namespace RC4
                 }
                 hataSayisi = 0;
             keyStart:
-                Console.WriteLine("Lutfen key dosyasının, dosya konumunu giriniz");
+                Console.WriteLine("Lutfen anahtar dosyasının, dosya konumunu giriniz");
                 string keyFolder = Console.ReadLine();
 
                 if (!File.Exists($@"{keyFolder}"))
@@ -81,9 +81,9 @@ namespace RC4
             }
             else if (secim == "2")
             {
-                Console.WriteLine("Lutfen plaintext degerini giriniz.");
+                Console.WriteLine("Lutfen düzyazı degerini giriniz.");
                 plainText = Console.ReadLine();
-                Console.WriteLine("Luften key degerini giriniz");
+                Console.WriteLine("Luften anahtar degerini giriniz");
                 key = Console.ReadLine();
                 encrypted = RC4.Encrypt(key, plainText);
                 Console.WriteLine();
