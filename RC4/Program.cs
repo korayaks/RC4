@@ -12,8 +12,8 @@ namespace RC4
             do
             {
                 Console.WriteLine("Yapilacak islemi secin.");
-                Console.WriteLine("1: Dosya konumu ile plaintext ve key değerlerini girin");
-                Console.WriteLine("2: Plaintext ve key değerini el ile girin");
+                Console.WriteLine("1: Dosya konumu ile duzyazi ve anahtar değerlerini girin");
+                Console.WriteLine("2: duzyazi ve anahtar değerini el ile girin");
                 Console.WriteLine("3: Çıkış");
                 Console.WriteLine();
                 secim = Console.ReadLine();
@@ -22,18 +22,18 @@ namespace RC4
         }
         public static void Secim(string secim)
         {
-            string plainText;
-            string key;
-            byte[] encrypted;
-            string decrypted;
+            string duzyazi;
+            string anahtar;
+            byte[] sifrelenmis;
+            string sifresiCozulmus;
             int hataSayisi;
             if (secim == "1")
             {
                 hataSayisi = 0;
-            plaintextStart:
+            duzyaziStart:
                 Console.WriteLine("Lutfen düzyazı dosyasının, dosya konumunu giriniz");
-                string plainTextFolder = Console.ReadLine();
-                if (!File.Exists($@"{plainTextFolder}"))
+                string duzyaziDosya = Console.ReadLine();
+                if (!File.Exists($@"{duzyaziDosya}"))
                 {
                     Console.WriteLine("Girilen dosya gecersiz.");
                     if (hataSayisi++ == 2)
@@ -44,15 +44,15 @@ namespace RC4
                     else
                     {
                         Console.WriteLine($"{hataSayisi} kez hatalı dosya girdiniz, 3 üst üste hata yaparsanız menüye geri döneceksiniz.");
-                        goto plaintextStart;
+                        goto duzyaziStart;
                     }
                 }
                 hataSayisi = 0;
-            keyStart:
+            anahtarStart:
                 Console.WriteLine("Lutfen anahtar dosyasının, dosya konumunu giriniz");
-                string keyFolder = Console.ReadLine();
+                string anahtarDosya = Console.ReadLine();
 
-                if (!File.Exists($@"{keyFolder}"))
+                if (!File.Exists($@"{anahtarDosya}"))
                 {
                     Console.WriteLine("Girilen dosya gecersiz.");
                     if(hataSayisi++ == 2)
@@ -63,38 +63,38 @@ namespace RC4
                     else
                     {
                         Console.WriteLine($"{hataSayisi} kez hatalı dosya girdiniz, 3 üst üste hata yaparsanız menüye geri döneceksiniz.");
-                        goto keyStart;
+                        goto anahtarStart;
                     }                   
                 }
-                plainText = File.ReadAllText($@"{plainTextFolder}");
-                key = File.ReadAllText($@"{keyFolder}");
-                encrypted = RC4.Encrypt(key, plainText);
+                duzyazi = File.ReadAllText($@"{duzyaziDosya}");
+                anahtar = File.ReadAllText($@"{anahtarDosya}");
+                sifrelenmis = RC4.Encrypt(anahtar, duzyazi);
                 Console.WriteLine();
                 Console.Write("Sifrelenmis veri: ");
-                foreach (var item in encrypted)
+                foreach (var item in sifrelenmis)
                 {
                     Console.Write(item + " ");
                 }
                 Console.WriteLine();
-                decrypted = RC4.Decrypt(key, encrypted);
-                Console.WriteLine("Sifresi cozulmus veri: " + decrypted);
+                sifresiCozulmus = RC4.Decrypt(anahtar, sifrelenmis);
+                Console.WriteLine("Sifresi cozulmus veri: " + sifresiCozulmus);
             }
             else if (secim == "2")
             {
                 Console.WriteLine("Lutfen düzyazı degerini giriniz.");
-                plainText = Console.ReadLine();
+                duzyazi = Console.ReadLine();
                 Console.WriteLine("Luften anahtar degerini giriniz");
-                key = Console.ReadLine();
-                encrypted = RC4.Encrypt(key, plainText);
+                anahtar = Console.ReadLine();
+                sifrelenmis = RC4.Encrypt(anahtar, duzyazi);
                 Console.WriteLine();
                 Console.Write("Sifrelenmis veri: ");
-                foreach (var item in encrypted)
+                foreach (var item in sifrelenmis)
                 {
                     Console.Write(item + " ");
                 }
                 Console.WriteLine();
-                decrypted = RC4.Decrypt(key, encrypted);
-                Console.WriteLine("Sifresi cozulmus veri: " + decrypted);
+                sifresiCozulmus = RC4.Decrypt(anahtar, sifrelenmis);
+                Console.WriteLine("Sifresi cozulmus veri: " + sifresiCozulmus);
             }
             else
             {
